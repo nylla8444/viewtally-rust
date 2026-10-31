@@ -10,7 +10,8 @@
     "migrate:local": "wrangler d1 migrations apply viewtally --local",
     "migrate:remote": "wrangler d1 migrations apply viewtally --remote",
     "deploy": "wrangler deploy",
-    "test": "cargo test && node --test e2e/"
+    "test": "cargo test && npm run test:e2e",
+    "test:e2e": "node --test \"e2e/*.test.mjs\""
   },
   "devDependencies": {
     "wrangler": "4.156.0"
