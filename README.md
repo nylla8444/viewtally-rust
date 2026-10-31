@@ -1,7 +1,7 @@
 # viewtally
 
 [![crates.io](https://img.shields.io/crates/v/viewtally.svg)](https://crates.io/crates/viewtally)
-[![portfolio views this year](https://viewtally.nylla.workers.dev/badge.svg?site=portfolio&days=365&label=portfolio%20views%20this%20year)](https://nylla.vercel.app)
+[![portfolio views](https://viewtally.nylla.workers.dev/badge.svg?site=portfolio&label=portfolio%20views)](https://nylla.vercel.app)
 
 A privacy-friendly page-view counter for personal websites, written in Rust
 for Cloudflare Workers, with counts stored in D1. You deploy it into your own
