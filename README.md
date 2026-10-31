@@ -1,5 +1,8 @@
 # viewtally
 
+[![crates.io](https://img.shields.io/crates/v/viewtally.svg)](https://crates.io/crates/viewtally)
+[![portfolio views this year](https://viewtally.nylla.workers.dev/badge.svg?site=portfolio&days=365&label=portfolio%20views%20this%20year)](https://nylla.vercel.app)
+
 A privacy-friendly page-view counter for personal websites, written in Rust
 for Cloudflare Workers, with counts stored in D1. You deploy it into your own
 Cloudflare account, on the free plan, with a few `wrangler` commands. Your
@@ -96,6 +99,13 @@ curl "http://localhost:8787/views?site=example&days=365"
 You need a free Cloudflare account. `wrangler login` opens your browser to
 sign in.
 
+If you've never deployed a Worker before, first pick your account's
+workers.dev subdomain in the dashboard: go to **Workers & Pages**, then
+**Settings**, then **Subdomain**. Every Worker you deploy is served at
+`<worker-name>.<subdomain>.workers.dev`. If you skip this step, a
+non-interactive `wrangler deploy` registers the Worker's own name as your
+subdomain.
+
 ```bash
 npx wrangler login
 ```
@@ -141,6 +151,10 @@ CACHE_SECONDS = "60"
   - Browsers may read the stats from any origin listed under any site.
   - `.dev.vars` and `wrangler dev --var` can also give `SITES` as a JSON
     string.
+  - To read your counts while you develop your site locally, without counting
+    those visits, add a site that only lists your dev server, like
+    `dev = ["http://localhost:8080"]`. Reads from localhost are then allowed,
+    while hits from localhost for your real site are refused.
 - **`CACHE_SECONDS`** sets how long stats responses are cached in browsers and,
   where the Cache API is available, at Cloudflare's edge. `"0"` turns caching
   off.
@@ -149,6 +163,11 @@ CACHE_SECONDS = "60"
   never the IP itself. If your account rejects this binding when you deploy,
   delete the block: the Worker skips the check when the binding is missing.
 - **`[triggers] crons`** sets when the daily purge runs.
+
+If you deploy from a public fork, you can keep your database id and origins
+out of git. Copy `wrangler.toml` to `wrangler.prod.toml`, which is already
+gitignored, and pass `-c wrangler.prod.toml` to the `wrangler d1 migrations`
+and `wrangler deploy` commands.
 
 ## Add it to your site
 
